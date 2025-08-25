@@ -1,0 +1,19 @@
+{
+  "name": "edumanager-backend",
+  "version": "1.0.0",
+  "description": "Backend pour EduManager Pro",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "create-db": "node create-db.js",
+    "migrate": "node migrate.js",
+    "reset": "node reset-db.js && npm run migrate",
+    "setup": "npm run create-db && npm run migrate"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql2": "^3.14.3"
+  }
+}

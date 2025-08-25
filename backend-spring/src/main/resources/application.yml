@@ -1,0 +1,76 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: edumanager-backend
+  
+  # Configuration de la base de données H2 (pour développement)
+  datasource:
+    url: jdbc:h2:mem:edumanager
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  
+  # Configuration JPA/Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+  
+  # Console H2 (pour développement)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  # Configuration CORS
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+
+# Configuration de logging
+logging:
+  level:
+    com.edumanager: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Configuration Swagger/OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+---
+# Profil de production avec MySQL
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://localhost:3306/edumanager?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:edumanager}
+    password: ${DB_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  h2:
+    console:
+      enabled: false
